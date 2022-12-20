@@ -26,7 +26,7 @@ def download_video():
         video = url.streams.get_by_itag(itag)
         video.stream_to_buffer(buffer)
         buffer.seek(0)
-        return send_file(buffer, as_attachment=True, download_name="Video - YT2Video.mp4", mimetype="video/mp4")
+        return send_file(buffer, as_attachment=True, download_name="Video - HeyTube.mp4", mimetype="video/mp4")
     return redirect(url_for("home"))
 
 if __name__ == '__main__':
