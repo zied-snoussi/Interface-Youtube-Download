@@ -1,0 +1,83 @@
+body{
+    background-image: url("../public/images/background.jpg");
+}
+
+.App {
+    margin-top: 60px;
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    align-items: center;
+    flex-direction: column;
+    row-gap: 20px;
+}
+input{
+    width: 400px;
+    height: 60px;
+    background-color: #6b0152;
+    border-radius: 20px;
+    text-align: center;
+    font-size: 40px;
+    border: 0px;
+    opacity: 80%;
+    color: white;
+}
+h1 {
+    background-color: blanchedalmond;
+    padding: 10px 100px;
+    border-radius: 20px;
+    margin: 10px;
+    font-size: 60px;
+    color: rgb(1, 1, 59);
+    opacity: 50%;
+}
+
+h1:hover {
+    background-color: rgb(1, 1, 59);
+    padding: 400px 100px;
+    border-radius: 20px;
+    margin: 0px;
+    font-size: 60px;
+    color: blanchedalmond;
+    opacity: 50%;
+    position: absolute;
+}
+
+.search {
+    width: 10%;
+}
+
+.result{
+    color: white;
+    background-color: #211504;
+    padding: 10px 100px;
+    border-radius: 10px;
+    opacity: 80%;
+    font-size: 30px;
+    font-family: 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif;
+}
+
+.btnPost{
+    margin-left: 10px;
+    width: auto;
+    height: auto;
+    font-size: 30px;
+    padding: 10px 20px;
+    background-color: #708570;
+    opacity: 80%;
+    border-radius: 20px;
+    font-family: "Monotype Corsiva", "Apple Chancery", "URW Chancery L", cursive;
+}
+
+button:hover{
+    background-color: red;
+    opacity: 60%;
+    color: white;
+    font-family: 'Trebuchet MS', sans-serif;
+}
+
+input:hover{
+    background-color: #b00460;
+    color: white;
+    font-family: 'Ubuntu', 'Lucida Grande', 'Lucida Sans Unicode', 'Geneva', 'Verdana', sans-serif
+}
