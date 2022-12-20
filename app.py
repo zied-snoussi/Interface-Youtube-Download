@@ -1,54 +1,33 @@
-from flask import Flask, request
+from flask import Flask, render_template, request, url_for, redirect, send_file, session
 from pytube import YouTube
+from io import BytesIO
 
 app = Flask(__name__)
-def download(link):
-    list=[]
-    video = YouTube(link)
-    list.append(f"The video title is :\n{video.title} \n----------------------")
-    list.append(f"The video description is :\n{video.description} \n----------------------")
-    list.append(f"The video views is :\n{video.views} \n----------------------")
-    list.append(f"The video rating is :\n{video.rating} \n----------------------")
-    list.append(f"The video duration is :\n{video.length} seconds \n----------------------")
-    video.streams.get_highest_resolution().download(output_path="C:/Users/zieds/Videos")
-    video.register_on_complete_callback(finish())
-    return list
+app.config['SECRET_KEY'] = "654c0fb3968af9d5e6a9b3edcbc7051b"
 
-#print(video.streams)
+@app.route("/", methods = ["GET", "POST"])
+def home():
+    if request.method == "POST":
+        session['link'] = request.form.get('url')
+        try:
+            url = YouTube(session['link'])
+            url.check_availability()
+        except:
+            return render_template("error.html")
+        return render_template("download.html", url = url)
+    return render_template("home.html")
 
-#for stream in video.streams:
- #   print(stream)
+@app.route("/download", methods = ["GET", "POST"])
+def download_video():
+    if request.method == "POST":
+        buffer = BytesIO()
+        url = YouTube(session['link'])
+        itag = request.form.get("itag")
+        video = url.streams.get_by_itag(itag)
+        video.stream_to_buffer(buffer)
+        buffer.seek(0)
+        return send_file(buffer, as_attachment=True, download_name="Video - YT2Video.mp4", mimetype="video/mp4")
+    return redirect(url_for("home"))
 
-#for stream in video.streams.filter(progressive=True):
-  #  print(stream)
-
-#for stream in video.streams.filter(res="720"):
-#    print(stream)
-
-#for stream in video.streams.filter(subtype="mp4", res):
- #   print(stream)
-
-# for stream in video.streams.filter(res="1080p"):
- #   print(stream)
- #print(video.streams.get_highest_resolution())
- #print(stream)
-def finish():
-    return "download done"
-
-
-link=""
-@app.route('/postLink' ,methods=['POST'])
-def postLink():
-    #req= "tunisie"
-    #if request.method == "POST":
-    global link
-    link = request.json["inputText"]
-    return link
-@app.route('/getResult' ,methods=['GET'])
-def getResult():
-    global link
-    return {"result": download(link)}
-
-
-if __name__ == "__main__":
-    app.run(debug=True, port=5000)
+if __name__ == '__main__':
+    app.run(debug=True)
