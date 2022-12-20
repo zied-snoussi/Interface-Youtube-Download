@@ -4,13 +4,18 @@ from pytube import YouTube
 app = Flask(__name__)
 
 link = input("Please enter the video URL : ")
-
-video = YouTube(link)
-print(f"The video title is :\n{video.title} \n----------------------")
-print(f"The video description is :\n{video.description} \n----------------------")
-print(f"The video views is :\n{video.views} \n----------------------")
-print(f"The video rating is :\n{video.rating} \n----------------------")
-print(f"The video duration is :\n{video.length} seconds \n----------------------")
+def download(link):
+    list=[]
+    video = YouTube(link)
+    list.append(f"The video title is :\n{video.title} \n----------------------")
+    list.append(f"The video description is :\n{video.description} \n----------------------")
+    list.append(f"The video views is :\n{video.views} \n----------------------")
+    list.append(f"The video rating is :\n{video.rating} \n----------------------")
+    list.append(f"The video duration is :\n{video.length} seconds \n----------------------")
+    list.append(finish())
+    video.streams.get_highest_resolution().download(output_path="C:/Users/zieds/Videos")
+    video.register_on_complete_callback(finish())
+    return list
 
 #print(video.streams)
 
@@ -31,23 +36,21 @@ print(f"The video duration is :\n{video.length} seconds \n----------------------
  #print(video.streams.get_highest_resolution())
  #print(stream)
 def finish():
-    print("download done")
+    return "download done"
 
-video.streams.get_highest_resolution().download(output_path="C:/Users/zieds/Videos")
-video.register_on_complete_callback(finish())
 
-@app.route('/postPaths' ,methods=['POST'])
-def postPaths():
+link=""
+@app.route('/postLink' ,methods=['POST'])
+def postLink():
     #req= "tunisie"
     #if request.method == "POST":
-    global req
-    req = request.json["inputText"]
-    return req
-@app.route('/paths' ,methods=['GET'])
-def paths():
-    res = []
-    global req
-    return {"paths": res}
+    global link
+    link = request.json["inputText"]
+    return link
+@app.route('/getResult' ,methods=['GET'])
+def getResult():
+    global link
+    return {"result": download(link)}
 
 
 if __name__ == "__main__":

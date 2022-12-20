@@ -11,14 +11,14 @@ function App() {
     }
     const getData = (e) =>{
         e.preventDefault()
-        Axios.get('/paths').then(res =>{
+        Axios.get('/getResult').then(res =>{
             console.log("Getting from ::::", res.data)
             setData(res.data)
         }).catch(err => console.log(err))
     }
     const postData = (e) =>{
         e.preventDefault();
-        Axios.post('postPaths', {
+        Axios.post('postLink', {
             inputText
         }).then(res =>
             console.log("Posting data ::::", res)
@@ -39,8 +39,8 @@ function App() {
                   fullWidth
                   label="Search"
                   name="inputText"
-                  onChangeCapture={postData}
-        /><button className="btnPost"  onClickCapture={getData}>
+                  onChangeCapture={postLink}
+        /><button className="btnPost"  onClickCapture={getResult}>
                   <i className="fas fa-search">Download</i>
               </button>
         <div className="groupButton">
