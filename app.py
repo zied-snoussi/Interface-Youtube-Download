@@ -2,8 +2,6 @@ from flask import Flask, request
 from pytube import YouTube
 
 app = Flask(__name__)
-
-link = input("Please enter the video URL : ")
 def download(link):
     list=[]
     video = YouTube(link)
@@ -12,7 +10,6 @@ def download(link):
     list.append(f"The video views is :\n{video.views} \n----------------------")
     list.append(f"The video rating is :\n{video.rating} \n----------------------")
     list.append(f"The video duration is :\n{video.length} seconds \n----------------------")
-    list.append(finish())
     video.streams.get_highest_resolution().download(output_path="C:/Users/zieds/Videos")
     video.register_on_complete_callback(finish())
     return list

@@ -9,14 +9,14 @@ function App() {
         setInputText(e.target.value)
         console.log(inputText);
     }
-    const getData = (e) =>{
+    const getResult = (e) =>{
         e.preventDefault()
         Axios.get('/getResult').then(res =>{
             console.log("Getting from ::::", res.data)
             setData(res.data)
         }).catch(err => console.log(err))
     }
-    const postData = (e) =>{
+    const postLink = (e) =>{
         e.preventDefault();
         Axios.post('postLink', {
             inputText
